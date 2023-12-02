@@ -13,8 +13,8 @@ export class AjouterReservationComponent {
     anneeUniversitaire:0,
     estValide:false,
     numReservation:"Pas Encore",
-    cinEtudiant:null,
-    typeChambre:null
+    cinEtudiant:0n,
+    typeChambre:undefined
 
   };
 
@@ -30,12 +30,15 @@ export class AjouterReservationComponent {
         console.log('Réponse de l\'API :', response.message);
         this.message = response.message; 
         // Stocker this.reservation.cinEtudiant dans le localStorage
-        localStorage.setItem('cinEtudiant', this.reservation.cinEtudiant.toString());
-        setTimeout(() => {
-          this.zone.run(() => {
-            this.message = null;
-          });
-        }, 3000);
+        if(this.reservation.cinEtudiant){
+          localStorage.setItem('cinEtudiant', this.reservation.cinEtudiant.toString());
+          setTimeout(() => {
+            this.zone.run(() => {
+              this.message = "";
+            });
+          }, 3000);
+        }
+        
       },
       (error) => {
         console.error('Erreur lors de l\'appel à l\'API :', error);
@@ -43,7 +46,7 @@ export class AjouterReservationComponent {
         // Masquer le message après 3 secondes
         setTimeout(() => {
           this.zone.run(() => {
-            this.message = null;
+            this.message = "";
           });
         }, 3000);
       }

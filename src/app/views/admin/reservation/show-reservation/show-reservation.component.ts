@@ -20,40 +20,41 @@ export class ShowReservationComponent {
     idEtudiant:.0,
     nomEt:'',
     prenomEt:'',
-    cin:null,
+    cin:0n,
     ecole:'',
-    dateNaissance:null
+    dateNaissance:undefined
   }
   reservation:Reservation={ 
     idReservation:0,
     anneeUniversitaire:0,
     estValide:false,
     numReservation:"Pas Encore",
-    cinEtudiant:null,
-    typeChambre:null
+    cinEtudiant:0n,
+    typeChambre:undefined
 
   };
   chambre: Chambre = { 
-    idChambre: null,
+    idChambre: 0,
     typeChambre:'',
-    numeroChambre:null,
-    blocIdBloc:null
+    numeroChambre:0n,
+    capaciteChambre:0,
+    blocIdBloc:0n
   }
   universite: Universite = { 
-    idUniversite: null,
+    idUniversite: 0,
     nomUniversite:'',
-    adresse:null,
+    adresse:"",
   }
   foyer : Foyer={
-    idFoyer:null,
-    nomFoyer:null,
-    capaciteFoyer:null,
-    universite:null
+    idFoyer:0,
+    nomFoyer:"",
+    capaciteFoyer:0,
+    universite:new Universite()
   }
   bloc:Bloc={
-    idBloc:null,
-    nomBloc:null,
-    capaciteBloc:null
+    idBloc:0,
+    nomBloc:"",
+    capaciteBloc:0
   }
   constructor(private route: ActivatedRoute,  private serviceReservation:ReservationService, private router: Router) { }
 
@@ -76,19 +77,19 @@ export class ShowReservationComponent {
       });
     });
   }
-  getByIdReservation(id) {
+  getByIdReservation(id:any) {
     return this.serviceReservation.getByIdReservation(id);
   }
 
-  getByEtudiantByCin(cinEtudiant){
+  getByEtudiantByCin(cinEtudiant:any){
     this.serviceReservation.getByEtudiantByCin(cinEtudiant).subscribe((data : Etudiant)=>{          
     this.etudiant = data;
     console.log("Object Etudiant ",this.etudiant);
     })
   }
 
-  getInfoByReservation(cinEtudiant){
-    this.serviceReservation.getInfoByReservation(cinEtudiant).subscribe((data : Map<string, Object>)=>{          
+  getInfoByReservation(cinEtudiant:any){
+    this.serviceReservation.getInfoByReservation(cinEtudiant).subscribe((data : any)=>{          
     this.foyer = data['foyer'];
     this.bloc=data['bloc'];
     this.chambre=data['chambre'];

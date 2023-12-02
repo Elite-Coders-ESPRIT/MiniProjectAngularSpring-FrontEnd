@@ -1,46 +1,187 @@
+...
 <div class="mt-5">
   <div class="container-fluid py-4">
     <div class="row">
       <div class="col-12">
         <div class="card mb-4">
           <div class="card-header pb-0">
-            <h6>Liste des universités</h6>
-          </div>
-          <div class="card-body px-0 pt-0 pb-2">
-            <div class="table-responsive p-0">
-              <table
-                class="table table-vcenter table-mobile-md card-table"
-                border="1"
-              >
-                <thead>
-                  <tr>
-                    <th>Id Université</th>
-                    <th>Nom Université</th>
-                    <th>Adresse</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>12333</td>
-                    <td>Esprit</td>
-                    <td>ghzala</td>
-                    <td class="col">
-                      <a class="btn text-success">
-                        <span class="material-icons"> visibility </span></a
-                      ><a class="btn text-warning">
-                        <span class="material-icons"> edit </span></a
-                      ><a class="btn text-danger">
-                        <span class="material-icons"> delete </span></a
+            <div class="row mt-1 align-items-center">
+              <h6 class="col-9 liste-universites-title">
+                Liste des universités
+              </h6>
+
+              <div class="col-3 form-group" style="margin-top: 5px">
+                <button
+                  class="btn btn-primary ajouter-universite-btn mt-3"
+                  (click)="openDialogAjout()"
+                >
+                  <i class="fas fa-plus"></i> Ajouter Université
+                </button>
+              </div>
+              <div class="search-hero mb-1">
+                <h3 class="search-hero mb-1">Recherche Multicritère</h3>
+
+                <div class="row my-3">
+                  <div class="col-4">
+                    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                      <div class="input-group">
+                        <span class="input-group-text text-body"
+                          ><i class="fas fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="text"
+                          [(ngModel)]="searchText"
+                          class="form-control"
+                          placeholder="Rechercher des bloc par nom..."
+                          style="width: 200px"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn text-danger mt-2" (click)="printSimplePdf()">
+                  <i class="fas fa-file-pdf"></i> Télécharger le PDF
+                </button>
+
+                <a class="col-1 btn btn-warning mx-2"
+                  ><span (click)="exportToExcel()" class="material-icons">
+                    file_download
+                  </span>
+                </a>
+                <a class="col-1 btn btn-warning mx-2"
+                  ><span (click)="printSimplePdf()" class="material-icons">
+                    picture_as_pdf
+                  </span>
+                </a>
+              </div>
+              <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive p-0">
+                  <table
+                    class="table table-vcenter table-mobile-md card-table"
+                    border="1"
+                  >
+                    <thead class="text-dark">
+                      <tr>
+                        <th>Id Université</th>
+                        <th>Nom Université</th>
+                        <th>Adresse</th>
+                        <th>Nom Foyer</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let universites of universite
+                            | filter : searchText
+                            | paginate
+                              : {
+                                  itemsPerPage: tableSize,
+                                  currentPage: page,
+                                  totalItems: count
+                                };
+                          let i = index
+                        "
+                        appHighlight
                       >
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                        <td>{{ universites.idUniversite }}</td>
+                        <td>{{ universites.nomUniversite }}</td>
+                        <td>{{ universites.adresse }}</td>
+                        <td>
+                          <ng-container
+                            *ngIf="listefoyer.length > 0; else noFoyer"
+                          >
+                            <ng-container
+                              *ngIf="
+                                hasFoyer(listefoyer, universites.idUniversite)
+                              "
+                            >
+                              <a
+                                class="btn btn-warning btn-sm"
+                                style="background-color: #413f3f"
+                              >
+                                {{
+                                  getFoyerName(
+                                    listefoyer,
+                                    universites.idUniversite
+                                  )
+                                }}
+                              </a>
+                            </ng-container>
+                            <ng-container
+                              *ngIf="
+                                !hasFoyer(listefoyer, universites.idUniversite)
+                              "
+                            >
+                              <a
+                                class="btn btn-warning btn-sm"
+                                style="background-color: #ebaa6e"
+                              >
+                                Non affecté
+                              </a>
+                            </ng-container>
+                          </ng-container>
+                          <ng-template #noFoyer>
+                            Aucun foyer associé
+                          </ng-template>
+                        </td>
+                        <td class="col">
+                          <!--a class="btn text-warning">
+                            <span
+                              class="material-icons"
+                              (click)="openUniversiteUpdate(universites)"
+                            >
+                              edit
+                            </span></a-->
+                          <!--a class="btn text-danger">
+                            <span
+                              class="material-icons"
+                              (click)="
+                                deleteUniversite(universites.idUniversite)
+                              "
+                              >delete</span
+                            ></a-->
+                          <button
+                            mat-fab
+                            [ngStyle]="{
+                              'background-color': 'white',
+                              'margin-right': '8px'
+                            }"
+                            (click)="openUniversiteUpdate(universites)"
+                          >
+                            <mat-icon style="color: rgb(255, 145, 0)"
+                              >edit</mat-icon
+                            >
+                          </button>
+                          <button
+                            mat-fab
+                            [ngStyle]="{ 'background-color': 'white' }"
+                            (click)="deleteUniversite(universites.idUniversite)"
+                          >
+                            <mat-icon style="color: red">delete</mat-icon>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div>
+  <!-- pagination-->
+  <div class="pagination-container d-flex justify-content-start">
+    <pagination-controls
+      previousLabel="Previous"
+      nextLabel="Next"
+      (pageChange)="onTableDataChange($event)"
+      class="mat-paginator my-custom-pagination"
+      style="color: black"
+    ></pagination-controls>
   </div>
 </div>

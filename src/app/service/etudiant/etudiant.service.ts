@@ -10,8 +10,8 @@ import { MatSnackBar } from "@angular/material/snack-bar";
   providedIn: 'root'
 })
 export class etudiantService {
-  private apiServer: string = 'http://localhost:8088/TpEtudeDeCas/etudiant/';
-  private baseURL: string = 'http://localhost:8088/TpEtudeDeCas/etudiant/';
+  private apiServer: string = 'http://localhost:8080/TpEtudeDeCas/etudiant/';
+  private baseURL: string = 'http://localhost:8080/TpEtudeDeCas/etudiant/';
 
   httpOptions = {
     headers: new HttpHeaders({

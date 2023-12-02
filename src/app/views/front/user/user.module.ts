@@ -4,9 +4,12 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AjouterReservationComponent } from './Reservation/ajouter-reservation/ajouter-reservation.component';
 import { ReservationsComponent } from './Reservation/reservations/reservations.component';
+
+
+
 
 
 @NgModule({
@@ -14,12 +17,12 @@ import { ReservationsComponent } from './Reservation/reservations/reservations.c
     LoginComponent,
     RegisterComponent,
     AjouterReservationComponent,
-    ReservationsComponent
+    ReservationsComponent,
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class UserModule { }

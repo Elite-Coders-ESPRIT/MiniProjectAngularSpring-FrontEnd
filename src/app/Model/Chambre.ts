@@ -1,6 +1,7 @@
 export class Chambre{
-    idChambre:BigInteger;
-    typeChambre: String;
-    numeroChambre:BigInt;
-    blocIdBloc: BigInt
+    idChambre?:number;
+    typeChambre?: String;
+    numeroChambre?:BigInt;
+    capaciteChambre:number;
+    blocIdBloc?: BigInt
 }

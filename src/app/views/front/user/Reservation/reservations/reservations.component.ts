@@ -27,7 +27,7 @@ export class ReservationsComponent {
     }
   
     this.serviceReservation.getMesReservations(+cinUser).subscribe(
-      (data: Map<string, Object>) => {
+      (data: any) => {
         this.reservations = data['reservations'];
          this.message = data['message']; 
         console.log("Object reservation ", this.reservations);

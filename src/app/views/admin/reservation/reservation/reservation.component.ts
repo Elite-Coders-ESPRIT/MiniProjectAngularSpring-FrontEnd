@@ -16,8 +16,8 @@ export class ReservationComponent {
   @ViewChild('pdfContent') pdfContent!: ElementRef;
 
   constructor( private twilioService: TwilioServiceService, private serviceReservation:ReservationService) { }
-  message: string;
- msgSMS : string ="**** Campus Living Spaces **** - Resulat de votre demande de reservation : -----";
+  message: string ="";
+  msgSMS : string ="**** Campus Living Spaces **** - Resulat de votre demande de reservation : -----";
   //déclaration pagination 
   p:number = 1 ; 
   POSTS: any;
@@ -37,12 +37,12 @@ export class ReservationComponent {
       console.log("Object reservation ",this.reservations);
     })
   }
-  delete(id){  
+  delete(id:any){  
     this.serviceReservation.delete(id).subscribe(() => {      
       window.location.reload();
     });
   }
-  nonValide(id){
+  nonValide(id:any){
   if (confirm("Voulez vous vraiment non valider  ce reservation ?")) {
     this.serviceReservation.nonValide(id).subscribe(() => {
       alert('Modifier effectuée avec succés');
@@ -50,7 +50,7 @@ export class ReservationComponent {
       });
   }}
 
-  ouiValide(id){
+  ouiValide(id:any){
     if (confirm("Voulez vous vraiment  valider  ce reservation ?")) {
       this.serviceReservation.ouiValide(id).subscribe(() => {
         alert('Modifier effectuée avec succés');
@@ -58,8 +58,8 @@ export class ReservationComponent {
         });
   }}
   
-  estValide(id):void{
-      this.serviceReservation.estValide(id).subscribe((data: Map<string, Object>) => {
+  estValide(id:any):void{
+      this.serviceReservation.estValide(id).subscribe((data: any) => {
         console.log('Réponse de l\'API :', data);
         this.message= data['message'];
         if (data['estValide']==true){
@@ -71,7 +71,7 @@ export class ReservationComponent {
       });
   }
 
-  envoyerSMS(msgSMS) {
+  envoyerSMS(msgSMS:any) {
     const numeroDestinataire = '+21621866975'; // Remplacez par le numéro réel
    
     this.twilioService.sendSMS(numeroDestinataire, msgSMS).subscribe(
