@@ -12,7 +12,10 @@ const routes: Routes = [
   {path:"admin",component: AdminLayoutComponent, children: [
        {path:"dashboard", loadChildren:()=>import ("./views/admin/dashboard/dashboard.module").then(m=>m.DashboardModule)},    
        {path:"login", loadChildren:()=>import ("./views/admin/login-admin/login-admin.module").then(m=>m.LoginAdminModule)},
-       {path:"universite", loadChildren:()=>import ("./views/admin/universite/universite.module").then(m=>m.UniversiteModule)}
+       {path:"universite", loadChildren:()=>import ("./views/admin/universite/universite.module").then(m=>m.UniversiteModule)},
+       {path:"reservation", loadChildren:()=>import ("./views/admin/reservation/reservation.module").then(m=>m.ReservationModule)},
+       {path:"foyer",loadChildren:()=>import ("./views/admin/foyer/foyer.module").then(m=>m.FoyerModule)}
+       
   ]}
 ];
 
